@@ -37,6 +37,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Live_e_commerce.HttpApi.Cli
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Live_e_commerce.DbMigrator", "src\Live_e_commerce.DbMigrator\Live_e_commerce.DbMigrator.csproj", "{AA94D832-1CCC-4715-95A9-A483F23A1A5D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Document", "Document", "{D9119BFE-FC9D-45E7-84F1-284AF6690C91}"
+	ProjectSection(SolutionItems) = preProject
+		..\pdf文档\01-ABP框架（业务）.pdf = ..\pdf文档\01-ABP框架（业务）.pdf
+		..\pdf文档\01-ABP框架（创建项目、初始化数据库）.pdf = ..\pdf文档\01-ABP框架（创建项目、初始化数据库）.pdf
+		..\pdf文档\ABPVnext实例入门.pdf = ..\pdf文档\ABPVnext实例入门.pdf
+		document\Live-e-commerce.pdm = document\Live-e-commerce.pdm
+		document\Live-E-Commerce.sql = document\Live-E-Commerce.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
