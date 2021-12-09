@@ -5,6 +5,7 @@ using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.EntityFrameworkCore.Modeling;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
@@ -51,24 +52,26 @@ namespace Live_e_commerce.EntityFrameworkCore
         public DbSet<Tenant> Tenants { get; set; }
         public DbSet<TenantConnectionString> TenantConnectionStrings { get; set; }
 
+        public  DbSet<Member> Members { get; set; }
+        public  DbSet<User> UserInfo { get; set; }
+        public  DbSet<UserBase> UserBases { get; set; }
+        public  DbSet<UserExtra> UserExtras { get; set; }
+        public  DbSet<UserInfoUpdate> UserInfoUpdates { get; set; }
+        public  DbSet<UserLocation> UserLocations { get; set; }
+        public  DbSet<UserLoginLog> UserLoginLogs { get; set; }
+        public  DbSet<UserRegisterLog> UserRegisterLogs { get; set; }
         #endregion
-        
-        public DbSet<TodoItem> TodoItems { get; set; }
+        #region
         public Live_e_commerceDbContext(DbContextOptions<Live_e_commerceDbContext> options)
             : base(options)
         {
 
         }
-
+        #endregion
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            #region
             base.OnModelCreating(builder);
-
-            builder.Entity<TodoItem>(b =>
-            {
-                b.ToTable("TodoItems");
-
-            });
 
             /* Include modules to your migration db context */
 
@@ -89,6 +92,47 @@ namespace Live_e_commerce.EntityFrameworkCore
             //    b.ConfigureByConvention(); //auto configure for the base class props
             //    //...
             //});
+            #endregion
+            builder.Entity<Member>(b =>
+            {
+                b.ToTable("Member");
+                b.ConfigureByConvention();
+            });
+            builder.Entity<User>(b =>
+            {
+                b.ToTable("User");
+                b.ConfigureByConvention();
+            });
+            builder.Entity<UserBase>(b =>
+            {
+                b.ToTable("UserBase");
+                b.ConfigureByConvention();
+            });
+            builder.Entity<UserExtra>(b =>
+            {
+                b.ToTable("UserExtra");
+                b.ConfigureByConvention();
+            });
+            builder.Entity<UserInfoUpdate>(b =>
+            {
+                b.ToTable("UserInfoUpdate");
+                b.ConfigureByConvention();
+            });
+            builder.Entity<UserLocation>(b =>
+            {
+                b.ToTable("UserLocation");
+                b.ConfigureByConvention();
+            });
+            builder.Entity<UserLoginLog>(b =>
+            {
+                b.ToTable("UserLoginLog");
+                b.ConfigureByConvention();
+            });
+            builder.Entity<UserRegisterLog>(b =>
+            {
+                b.ToTable("UserRegisterLog");
+                b.ConfigureByConvention();
+            });
         }
     }
 }

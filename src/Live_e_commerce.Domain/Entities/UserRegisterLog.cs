@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using Volo.Abp.Domain.Entities.Auditing;
 
 #nullable disable
 
-namespace Live_e_commerce.Models
+namespace Live_e_commerce.Entities
 {
-    public partial class UserRegisterLog
+    [Table("UserRegisterLog")]
+    public  class UserRegisterLog : AuditedAggregateRoot<Guid>
     {
-        public Guid Id { get; set; }
         public Guid? Uid { get; set; }
         public string RegisterMethod { get; set; }
         public DateTime? RegisterTime { get; set; }

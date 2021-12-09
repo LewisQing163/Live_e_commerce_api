@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using Volo.Abp.Domain.Entities.Auditing;
 
 #nullable disable
 
-namespace Live_e_commerce.Models
+namespace Live_e_commerce.Entities
 {
-    public partial class UserInfoUpdate
+    [Table("UserInfoUpdate")]
+    public  class UserInfoUpdate : AuditedAggregateRoot<Guid>
     {
-        public Guid Id { get; set; }
         public string AttributeOldVal { get; set; }
         public string AttributeNewVal { get; set; }
         public DateTime? UpdateTime { get; set; }

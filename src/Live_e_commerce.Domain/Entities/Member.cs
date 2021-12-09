@@ -1,14 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using Volo.Abp.Domain.Entities.Auditing;
 
 #nullable disable
 
-namespace Live_e_commerce.Models
+namespace Live_e_commerce.Entities
 {
-    public partial class Member
+    [Table("Member")]
+    /// <summary>
+    /// 会员表
+    /// </summary>
+    public  class Member: AuditedAggregateRoot<Guid>
     {
-        public Guid Id { get; set; }
+        /// <summary>
+        /// 会员类型
+        /// </summary>
         public string MemberName { get; set; }
+        /// <summary>
+        /// 用户基础表id
+        /// </summary>
         public Guid Uid { get; set; }
     }
 }

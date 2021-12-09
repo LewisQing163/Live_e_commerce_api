@@ -10,6 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Live_e_commerce.Domain\Live_e_commerce.Domain.csproj" />
     <ProjectReference Include="..\Live_e_commerce.Application.Contracts\Live_e_commerce.Application.Contracts.csproj" />
+    <ProjectReference Include="..\Live_e_commerce.EntityFrameworkCore\Live_e_commerce.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
   <ItemGroup>
