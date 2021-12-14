@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Volo.Abp.Application.Dtos;
 
 namespace Live_e_commerce.CreateUpdateDto
 {
-    public class CreateUpdateClassificationDto
+    public class CreateUpdateClassificationDto 
     {
         /// <summary>
         /// 类别

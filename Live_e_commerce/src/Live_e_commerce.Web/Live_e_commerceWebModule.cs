@@ -37,6 +37,8 @@ using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.UI;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.VirtualFileSystem;
+using Volo.Abp.IdentityServer;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Live_e_commerce.Web
 {
@@ -69,6 +71,30 @@ namespace Live_e_commerce.Web
                     typeof(Live_e_commerceWebModule).Assembly
                 );
             });
+
+            //var configuration = context.Services.GetConfiguration();
+
+            //var filePath = Path.Combine(AppContext.BaseDirectory, configuration["Certificates:CerPath"]);
+            //if (!File.Exists(filePath))
+            //{
+            //    throw new FileNotFoundException($"没有证书!");
+            //}
+            ////禁止生成开发的id4证书
+            //PreConfigure<AbpIdentityServerBuilderOptions>(options =>
+            //{
+            //    options.AddDeveloperSigningCredential = false;
+
+            //});
+
+            //PreConfigure<IIdentityServerBuilder>(opt =>
+            //{
+            //    opt.AddSigningCredential(new X509Certificate2(
+            //                    filePath,
+            //                    configuration["Certificates:Password"] //Export Password)
+            //        ))
+            //    .AddResourceOwnerValidator<AuthROPValidator>()
+            //    .AddProfileService<AuthROPProfileService>();
+            //});
         }
 
         public override void ConfigureServices(ServiceConfigurationContext context)

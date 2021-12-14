@@ -16,7 +16,22 @@ namespace Live_e_commerce
 
             CreateMap<Member, MemberDto>();
             CreateMap<CreateUpdateMenmberDto, Member>();
+
+
+
             CreateMap<User, UserDto>();
+            CreateMap<UserDto, User>();
+
+
+            CreateMap<Commodity,CommodityDto>();
+            CreateMap< CreateUpdateCommodityDto,Commodity> ();
+
+
+
+
+            CreateMap<Classification,ClassificationDto>();
+
+            CreateMap<CreateUpdateClassificationDto,Classification>();
         }
     }
 }

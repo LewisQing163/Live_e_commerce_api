@@ -5,11 +5,25 @@ using System.Text;
 
 namespace Live_e_commerce.Common
 {
-    //public class ReturnResult
-    //{
+    public class ReturnResult<T>
+    {
+        /// <summary>
+        /// 状态码
+        /// </summary>
+        public int State { get; set; }
+        /// <summary>
+        /// 消息提示
+        /// </summary>
 
-    //    public States States { get; set; }
+        public string Msg { get; set; }
+        /// <summary>
+        /// 数据
+        /// </summary>
 
-    //    public IEnumerable<User> Data { get; set; }
-    //}
+        public string Date { get; set; }
+        /// <summary>
+        /// token
+        /// </summary>
+        public string Token { get; set; }
+    }
 }

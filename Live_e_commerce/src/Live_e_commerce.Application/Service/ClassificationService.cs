@@ -16,7 +16,7 @@ namespace Live_e_commerce.Service
     /// <summary>
     /// 类别实现
     /// </summary>
-    public class ClassificationService : CrudAppService<Classification, ClassificationDto, Guid, PagedAndSortedResultRequestDto, CreateUpdateClassificationDto>,IClassificationService
+    public class ClassificationService : CrudAppService<Classification,ClassificationDto,Guid, PagedAndSortedResultRequestDto,CreateUpdateClassificationDto>,IClassificationService
     {
         public ClassificationService(IRepository<Classification,Guid> respository) : base(respository) { }
     }

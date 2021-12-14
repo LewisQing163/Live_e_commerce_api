@@ -16,6 +16,7 @@ namespace Live_e_commerce.Entities
         public int Price { get; set; }
         public string Weight { get; set; }
         public string Picture { get; set; }
-        
+        public Guid Cid { get; set; }
+
     }
 }

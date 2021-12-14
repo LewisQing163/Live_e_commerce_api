@@ -12,5 +12,6 @@ namespace Live_e_commerce.Dto
         public int Price { get; set; }
         public int Weight { get; set; }
         public string Picture { get; set; }
+        public Guid Cid { get; set; }
     }
 }

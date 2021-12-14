@@ -16,8 +16,6 @@ namespace Live_e_commerce.Dto
         /// </summary>
         public string PassWord { get; set; }
 
-        public bool State { get; set; }
       
-        public string Msg { get; set; }
     }
 }
