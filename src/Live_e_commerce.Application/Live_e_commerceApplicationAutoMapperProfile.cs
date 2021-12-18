@@ -27,11 +27,9 @@ namespace Live_e_commerce
             CreateMap< CreateUpdateCommodityDto,Commodity> ();
 
 
-
-
             CreateMap<Classification,ClassificationDto>();
+            CreateMap<CreateUpdateClassificationDto, Classification>();
 
-            CreateMap<CreateUpdateClassificationDto,Classification>();
         }
     }
 }

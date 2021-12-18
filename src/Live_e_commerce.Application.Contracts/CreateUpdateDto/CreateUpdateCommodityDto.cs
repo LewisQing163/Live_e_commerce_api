@@ -8,7 +8,7 @@ namespace Live_e_commerce.CreateUpdateDto
     {
         public string Name { get; set; }
         public int Price { get; set; }
-        public int Weight { get; set; }
+        public string Weight { get; set; }
         public string Picture { get; set; }
         public Guid Cid { get; set; }
     }

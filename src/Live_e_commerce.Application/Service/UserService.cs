@@ -53,7 +53,7 @@ namespace Live_e_commerce.Service
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        [HttpGet,Route("Login")]
+        [HttpPost,Route("Login")]
         public async Task<ReturnResult<int>> Login(UserDto user)
         {
             Ids4Service ids = new Ids4Service(_configuration);
@@ -69,7 +69,7 @@ namespace Live_e_commerce.Service
             var data = await _repository.GetListAsync();
             var token = await ids.GetIdsTokenAsync(user);
             ObjectMapper.Map<List<User>, List<UserDto>>(data);
-            var u = data.Where(p => p.Name.Equals(user.Name) && p.PassWord.Equals(user.PassWord)).FirstOrDefault();       
+            var u = data.Where(p => p.Name.Equals(user.Name) && p.PassWord.Equals(StringHelper.MD5Hash(user.PassWord))).FirstOrDefault();       
             if (u == null)
             {
                 return new ReturnResult<int> {

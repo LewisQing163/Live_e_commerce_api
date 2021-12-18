@@ -60,6 +60,14 @@ namespace Live_e_commerce.EntityFrameworkCore
         public  DbSet<UserLocation> UserLocations { get; set; }
         public  DbSet<UserLoginLog> UserLoginLogs { get; set; }
         public  DbSet<UserRegisterLog> UserRegisterLogs { get; set; }
+        /// <summary>
+        /// 分类
+        /// </summary>
+        public DbSet<Classification> Classifications { get; set; }
+        /// <summary>
+        /// 商品
+        /// </summary>
+        public DbSet<Commodity> Commoditys { get; set; }
         #endregion
         #region
         public Live_e_commerceDbContext(DbContextOptions<Live_e_commerceDbContext> options)
@@ -93,6 +101,7 @@ namespace Live_e_commerce.EntityFrameworkCore
             //    //...
             //});
             #endregion
+
             builder.Entity<Member>(b =>
             {
                 b.ToTable("Member");
@@ -131,6 +140,16 @@ namespace Live_e_commerce.EntityFrameworkCore
             builder.Entity<UserRegisterLog>(b =>
             {
                 b.ToTable("UserRegisterLog");
+                b.ConfigureByConvention();
+            });
+            builder.Entity<UserRegisterLog>(b =>
+            {
+                b.ToTable("Classifications");
+                b.ConfigureByConvention();
+            });
+            builder.Entity<UserRegisterLog>(b =>
+            {
+                b.ToTable("Commodity");
                 b.ConfigureByConvention();
             });
         }

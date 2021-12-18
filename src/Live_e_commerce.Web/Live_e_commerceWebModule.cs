@@ -237,7 +237,11 @@ namespace Live_e_commerce.Web
             {
                 app.UseErrorPage();
             }
-
+            app.UseCors(x => {
+                x.AllowAnyHeader();
+                x.AllowAnyMethod();
+                x.AllowAnyOrigin();
+            });
             app.UseCorrelationId();
             app.UseStaticFiles();
             app.UseRouting();
@@ -260,6 +264,7 @@ namespace Live_e_commerce.Web
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
             app.UseConfiguredEndpoints();
+           
         }
     }
 }
