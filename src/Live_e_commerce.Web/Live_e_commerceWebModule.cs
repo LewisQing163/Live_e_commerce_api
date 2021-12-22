@@ -39,6 +39,11 @@ using Volo.Abp.UI.Navigation;
 using Volo.Abp.VirtualFileSystem;
 using Volo.Abp.IdentityServer;
 using System.Security.Cryptography.X509Certificates;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Live_e_commerce.Common;
+using System.Text;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace Live_e_commerce.Web
 {
@@ -47,7 +52,7 @@ namespace Live_e_commerce.Web
         typeof(Live_e_commerceApplicationModule),
         typeof(Live_e_commerceEntityFrameworkCoreModule),
         typeof(AbpAutofacModule),
-        typeof(AbpIdentityWebModule),
+        //typeof(AbpIdentityWebModule),
         typeof(AbpSettingManagementWebModule),
         typeof(AbpAccountWebIdentityServerModule),
         typeof(AbpAspNetCoreMvcUiBasicThemeModule),
@@ -71,30 +76,6 @@ namespace Live_e_commerce.Web
                     typeof(Live_e_commerceWebModule).Assembly
                 );
             });
-
-            //var configuration = context.Services.GetConfiguration();
-
-            //var filePath = Path.Combine(AppContext.BaseDirectory, configuration["Certificates:CerPath"]);
-            //if (!File.Exists(filePath))
-            //{
-            //    throw new FileNotFoundException($"没有证书!");
-            //}
-            ////禁止生成开发的id4证书
-            //PreConfigure<AbpIdentityServerBuilderOptions>(options =>
-            //{
-            //    options.AddDeveloperSigningCredential = false;
-
-            //});
-
-            //PreConfigure<IIdentityServerBuilder>(opt =>
-            //{
-            //    opt.AddSigningCredential(new X509Certificate2(
-            //                    filePath,
-            //                    configuration["Certificates:Password"] //Export Password)
-            //        ))
-            //    .AddResourceOwnerValidator<AuthROPValidator>()
-            //    .AddProfileService<AuthROPProfileService>();
-            //});
         }
 
         public override void ConfigureServices(ServiceConfigurationContext context)
@@ -111,6 +92,7 @@ namespace Live_e_commerce.Web
             ConfigureNavigationServices();
             ConfigureAutoApiControllers();
             ConfigureSwaggerServices(context.Services);
+
         }
 
         private void ConfigureUrls(IConfiguration configuration)
@@ -137,13 +119,38 @@ namespace Live_e_commerce.Web
 
         private void ConfigureAuthentication(ServiceConfigurationContext context, IConfiguration configuration)
         {
+            //context.Services.AddAuthentication()
+            //    .AddJwtBearer(options =>
+            //    {
+            //        options.Authority = configuration["AuthServer:Authority"];
+            //        options.RequireHttpsMetadata = Convert.ToBoolean(configuration["AuthServer:RequireHttpsMetadata"]);
+            //        options.Audience = "Live_e_commerce";
+
+
+            //    });
+
+            //添加jwt验证：
             context.Services.AddAuthentication()
-                .AddJwtBearer(options =>
+            .AddJwtBearer(options =>
+            {
+                options.Authority = configuration["AuthServer:Authority"];
+                options.RequireHttpsMetadata = Convert.ToBoolean(configuration["AuthServer:RequireHttpsMetadata"]);
+                options.Audience = "Live_e_commerce";
+
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    options.Authority = configuration["AuthServer:Authority"];
-                    options.RequireHttpsMetadata = Convert.ToBoolean(configuration["AuthServer:RequireHttpsMetadata"]);
-                    options.Audience = "Live_e_commerce";
-                });
+                    ValidateIssuer = true,//是否验证Issuer
+                    ValidateAudience = true,//是否验证Audience
+                    ValidateLifetime = true,//是否验证失效时间
+                    ClockSkew = TimeSpan.FromSeconds(30),
+                    ValidateIssuerSigningKey = true,//是否验证SecurityKey
+                    ValidAudience = Const.Aduience,//Audience
+                    ValidIssuer = Const.Issuer,//Issuer，这两项和前面签发jwt的设置一致
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Const.SecurityKey))
+                };
+            });
+
+
         }
 
         private void ConfigureAutoMapper()
@@ -214,9 +221,23 @@ namespace Live_e_commerce.Web
             services.AddAbpSwaggerGen(
                 options =>
                 {
-                    options.SwaggerDoc("v1", new OpenApiInfo { Title = "Live_e_commerce API", Version = "v1" });
+                    options.SwaggerDoc("v1", new OpenApiInfo { Title = "Live_e_commerce.Web", Version = "v1" });
                     options.DocInclusionPredicate((docName, description) => true);
                     options.CustomSchemaIds(type => type.FullName);
+
+                    #region swagger 用 Jwt验证
+                    //开启权限小锁
+                    options.OperationFilter<AddResponseHeadersFilter>();
+                    options.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
+                    //在header中添加token，传递到后台
+                    options.OperationFilter<SecurityRequirementsOperationFilter>();
+                    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                    {
+                        Description = "JWT授权(数据将在请求头中进行传递)直接在下面框中输入Bearer{ token }(注意两者之间是一个空格) \"",
+                        Name = "Authorization",//jwt默认的参数名称
+                        In = ParameterLocation.Header,//jwt默认存放Authorization信息的位置(请求头中)Type = SecuritySchemeType.ApiKey
+                    });
+                    #endregion
                 }
             );
         }
@@ -237,7 +258,8 @@ namespace Live_e_commerce.Web
             {
                 app.UseErrorPage();
             }
-            app.UseCors(x => {
+            app.UseCors(x =>
+            {
                 x.AllowAnyHeader();
                 x.AllowAnyMethod();
                 x.AllowAnyOrigin();
@@ -264,7 +286,7 @@ namespace Live_e_commerce.Web
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
             app.UseConfiguredEndpoints();
-           
+
         }
     }
 }

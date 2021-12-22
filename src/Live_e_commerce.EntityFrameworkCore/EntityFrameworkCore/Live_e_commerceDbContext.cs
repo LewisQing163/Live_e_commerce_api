@@ -68,6 +68,8 @@ namespace Live_e_commerce.EntityFrameworkCore
         /// 商品
         /// </summary>
         public DbSet<Commodity> Commoditys { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Specification> Specifications { get; set; }
         #endregion
         #region
         public Live_e_commerceDbContext(DbContextOptions<Live_e_commerceDbContext> options)
@@ -102,6 +104,7 @@ namespace Live_e_commerce.EntityFrameworkCore
             //});
             #endregion
 
+            #region entity
             builder.Entity<Member>(b =>
             {
                 b.ToTable("Member");
@@ -142,16 +145,27 @@ namespace Live_e_commerce.EntityFrameworkCore
                 b.ToTable("UserRegisterLog");
                 b.ConfigureByConvention();
             });
-            builder.Entity<UserRegisterLog>(b =>
+            builder.Entity<Classification>(b =>
             {
-                b.ToTable("Classifications");
+                b.ToTable("Classification");
                 b.ConfigureByConvention();
             });
-            builder.Entity<UserRegisterLog>(b =>
+            builder.Entity<Commodity>(b =>
             {
                 b.ToTable("Commodity");
                 b.ConfigureByConvention();
             });
+            builder.Entity<Order>(b =>
+            {
+                b.ToTable("Order");
+                b.ConfigureByConvention();
+            });
+            builder.Entity<Specification>(b =>
+            {
+                b.ToTable("Specification");
+                b.ConfigureByConvention();
+            });
+            #endregion
         }
     }
 }

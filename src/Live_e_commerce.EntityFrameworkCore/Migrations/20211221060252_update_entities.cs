@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Live_e_commerce.Migrations
 {
-    public partial class Create_Entities : Migration
+    public partial class update_entities : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -273,7 +273,7 @@ namespace Live_e_commerce.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Classifications",
+                name: "Classification",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -287,7 +287,7 @@ namespace Live_e_commerce.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Classifications", x => x.Id);
+                    table.PrimaryKey("PK_Classification", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -295,9 +295,13 @@ namespace Live_e_commerce.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Uid = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    RegisterMethod = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RegisterTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<int>(type: "int", nullable: false),
+                    Weight = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Picture = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClassificationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SpecificationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ExtraProperties = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -308,28 +312,6 @@ namespace Live_e_commerce.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Commodity", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Commoditys",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Price = table.Column<int>(type: "int", nullable: false),
-                    Weight = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Picture = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Cid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ExtraProperties = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
-                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    LastModifierId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Commoditys", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -537,6 +519,35 @@ namespace Live_e_commerce.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Order",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OrderNumber = table.Column<int>(type: "int", nullable: false),
+                    OrderRemark = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Order", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Specification",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Long = table.Column<int>(type: "int", nullable: false),
+                    Width = table.Column<int>(type: "int", nullable: false),
+                    High = table.Column<int>(type: "int", nullable: false),
+                    Weight = table.Column<int>(type: "int", nullable: false),
+                    SpecificationRemark = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Specification", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
                 {
@@ -667,6 +678,26 @@ namespace Live_e_commerce.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserLoginLog", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserRegisterLog",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Uid = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    RegisterMethod = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RegisterTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ExtraProperties = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRegisterLog", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -1484,13 +1515,10 @@ namespace Live_e_commerce.Migrations
                 name: "AbpUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Classifications");
+                name: "Classification");
 
             migrationBuilder.DropTable(
                 name: "Commodity");
-
-            migrationBuilder.DropTable(
-                name: "Commoditys");
 
             migrationBuilder.DropTable(
                 name: "IdentityServerApiResourceClaims");
@@ -1553,6 +1581,12 @@ namespace Live_e_commerce.Migrations
                 name: "Member");
 
             migrationBuilder.DropTable(
+                name: "Order");
+
+            migrationBuilder.DropTable(
+                name: "Specification");
+
+            migrationBuilder.DropTable(
                 name: "User");
 
             migrationBuilder.DropTable(
@@ -1569,6 +1603,9 @@ namespace Live_e_commerce.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserLoginLog");
+
+            migrationBuilder.DropTable(
+                name: "UserRegisterLog");
 
             migrationBuilder.DropTable(
                 name: "AbpEntityChanges");

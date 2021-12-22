@@ -30,6 +30,11 @@ namespace Live_e_commerce
             CreateMap<Classification,ClassificationDto>();
             CreateMap<CreateUpdateClassificationDto, Classification>();
 
+            CreateMap<Order, OrderDto>();
+            CreateMap<CreateUpdateOrderDto, Order>();
+
+            CreateMap<Specification, SpecificationDto>();
+            CreateMap<CreateUpdateSpecifitionDto, Specification>();
         }
     }
 }

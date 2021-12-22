@@ -4,15 +4,17 @@ using Live_e_commerce.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Volo.Abp.EntityFrameworkCore;
 
 namespace Live_e_commerce.Migrations
 {
     [DbContext(typeof(Live_e_commerceDbContext))]
-    partial class Live_e_commerceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211221060252_update_entities")]
+    partial class update_entities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,9 +171,6 @@ namespace Live_e_commerce.Migrations
 
                     b.Property<string>("OrderRemark")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("States")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

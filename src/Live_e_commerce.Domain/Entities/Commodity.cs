@@ -12,12 +12,12 @@ namespace Live_e_commerce.Entities
     /// </summary>
     public class Commodity:AuditedAggregateRoot<Guid>
     {
-        public string Name { get; set; }
-        public int Price { get; set; }
-        public string Weight { get; set; }
-        public string Picture { get; set; }
-        public Guid Cid { get; set; }
-        //public int State { get; set; }
-
+        public string Name { get; set; }//商品名
+        public int Price { get; set; }//价格
+        public string Weight { get; set; }//重量
+        public string Picture { get; set; }//图片
+        public Guid ClassificationId { get; set; }//分类表id
+        public Guid SpecificationId { get; set; }//规格表id
+        public Guid OrderId { get; set; }//订单id
     }
 }

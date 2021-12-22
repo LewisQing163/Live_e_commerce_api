@@ -4,6 +4,7 @@ using Live_e_commerce.Entities;
 using Live_e_commerce.Iservice;
 using Live_e_commerce.SafetyVerification;
 using LiveApp.Helper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -27,12 +28,14 @@ namespace Live_e_commerce.Service
             _configuration = configuration;
         }
         #endregion
+
         #region 注册实现
         /// <summary>
         /// 注册实现
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
+        [Authorize]
         [HttpPost,Route("AddUser")]
         public async Task<ReturnResult<int>> AddUser(UserDto user)
         {
@@ -67,7 +70,7 @@ namespace Live_e_commerce.Service
             }
 
             var data = await _repository.GetListAsync();
-            var token = await ids.GetIdsTokenAsync(user);
+            var token = Live_e_commerce.JWT.JwtToken.CreateToken(user.Name);
             ObjectMapper.Map<List<User>, List<UserDto>>(data);
             var u = data.Where(p => p.Name.Equals(user.Name) && p.PassWord.Equals(StringHelper.MD5Hash(user.PassWord))).FirstOrDefault();       
             if (u == null)
@@ -83,9 +86,10 @@ namespace Live_e_commerce.Service
                     Msg = "登录成功", 
                     State=Convert.ToInt32( CommonEnum.LoginStates.SuccessFully),
                     Date= u.Name,
-                    Token=token
+                    Token =token
                 };
             }
+
         }
         #endregion
 

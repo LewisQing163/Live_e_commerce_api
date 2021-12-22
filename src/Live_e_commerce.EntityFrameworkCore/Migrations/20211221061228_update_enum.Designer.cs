@@ -11,8 +11,8 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Live_e_commerce.Migrations
 {
     [DbContext(typeof(Live_e_commerceDbContext))]
-    [Migration("20211216085828_Create_Entities")]
-    partial class Create_Entities
+    [Migration("20211221061228_update_enum")]
+    partial class update_enum
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -59,7 +59,7 @@ namespace Live_e_commerce.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Classifications");
+                    b.ToTable("Classification");
                 });
 
             modelBuilder.Entity("Live_e_commerce.Entities.Commodity", b =>
@@ -67,7 +67,7 @@ namespace Live_e_commerce.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("Cid")
+                    b.Property<Guid>("ClassificationId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -99,18 +99,24 @@ namespace Live_e_commerce.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Picture")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("SpecificationId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Weight")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Commoditys");
+                    b.ToTable("Commodity");
                 });
 
             modelBuilder.Entity("Live_e_commerce.Entities.Member", b =>
@@ -153,6 +159,50 @@ namespace Live_e_commerce.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Member");
+                });
+
+            modelBuilder.Entity("Live_e_commerce.Entities.Order", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("OrderNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OrderRemark")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("States")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Order");
+                });
+
+            modelBuilder.Entity("Live_e_commerce.Entities.Specification", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("High")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Long")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SpecificationRemark")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Weight")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Width")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Specification");
                 });
 
             modelBuilder.Entity("Live_e_commerce.Entities.User", b =>
@@ -506,7 +556,7 @@ namespace Live_e_commerce.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Commodity");
+                    b.ToTable("UserRegisterLog");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>
