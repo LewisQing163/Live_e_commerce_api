@@ -68,8 +68,19 @@ namespace Live_e_commerce.EntityFrameworkCore
         /// 商品
         /// </summary>
         public DbSet<Commodity> Commoditys { get; set; }
+        /// <summary>
+        /// 订单
+        /// </summary>
         public DbSet<Order> Orders { get; set; }
+        /// <summary>
+        /// 规格
+        /// </summary>
         public DbSet<Specification> Specifications { get; set; }
+        /// <summary>
+        /// 购物车
+        /// </summary>
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+
         #endregion
         #region
         public Live_e_commerceDbContext(DbContextOptions<Live_e_commerceDbContext> options)
@@ -163,6 +174,11 @@ namespace Live_e_commerce.EntityFrameworkCore
             builder.Entity<Specification>(b =>
             {
                 b.ToTable("Specification");
+                b.ConfigureByConvention();
+            });
+            builder.Entity<ShoppingCart>(b =>
+            {
+                b.ToTable("ShoppingCart");
                 b.ConfigureByConvention();
             });
             #endregion

@@ -15,14 +15,16 @@ namespace Live_e_commerce.Entities
     public class Order:BasicAggregateRoot<Guid>
     {
         public int OrderNumber { get; set; }//订单编号
-        public States States { get; set; }//订单状态,1表示正常,2表示异常
+        public States States { get; set; }//订单状态
         public string OrderRemark { get; set; }//订单表备注
     }
     
     public enum States
     {
-        Normal = 1, 
-        Abnormal = 2
+        Submit=1,//订但提交成功
+        PaymentSuccessful=2,//支付成功
+        Unpaid=4,//多久时间内未支付
+        CancelOrder=8,//订单取消
     }
 
 }
